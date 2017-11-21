@@ -1,0 +1,17 @@
+{
+  "env": { "node": true },
+  "plugins": [],
+  "extends": [
+    "eslint:recommended"
+  ],
+  "globals": {
+    "Map": true,
+    "Promise": "true"
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {},
+    "sourceType": "module",
+    "impliedStrict": true
+  }
+}

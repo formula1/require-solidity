@@ -1,0 +1,34 @@
+{
+  "name": "require-solidity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/node.js",
+  "scripts": {
+    "test": "tap tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/formula1/require-solidity.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/formula1/require-solidity/issues"
+  },
+  "homepage": "https://github.com/formula1/require-solidity#readme",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "get-caller-file": "^1.0.2",
+    "resolve": "^1.5.0",
+    "solc": "^0.4.18",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "browserify": "^14.5.0",
+    "concat-stream": "^1.6.0",
+    "ganache-core": "^2.0.2",
+    "tap": "^10.7.3",
+    "web3": "^1.0.0-beta.26",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
