@@ -108,9 +108,10 @@ tap.test("node requireSol Function", function(t){
 tap.test("node bind to require", function(t){
   require("../dist/node").bindToRequire();
 
-  const contractsConfig = require("./contracts/HelloWorld.sol");
+  const contractsConfig = require("./submodule");
 
   t.pass("can access with normal require");
+  t.pass("binds to require globally");
 
   const blockchainTests = require("./blockchain-tests");
 
