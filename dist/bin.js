@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const fs = require("fs");
 const path = require("path");
 const findAndCompile = require("../src");
@@ -7,7 +9,7 @@ const inputfile = process.argv[2];
 const outputfile = process.argv[3];
 
 var contract = findAndCompile(
-  inputfile, basedir
+  inputfile, basedir + "/false.js"
 );
 if(outputfile){
   fs.writeFileSync(

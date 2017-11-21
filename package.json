@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/node.js",
+  "bin": {
+    "compile-sol": "dist/bin.js"
+  },
   "scripts": {
     "test": "tap tests/index.js"
   },
