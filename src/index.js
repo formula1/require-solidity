@@ -10,13 +10,13 @@ const isWarning = function(e){
   if(!e){
     return true;
   }
-  if(typepof e === "string"){
+  if(typeof e === "string"){
     return /Warning\: /.test(e);
   }
   if(typeof e === "object"){
     return e.severity === "warning"
   }
-
+  return false;
 };
 
 function findImport(oFile, solToRequire){
