@@ -73,9 +73,13 @@ tap.test("browserify transform", function(t){
     t.pass("able to use the base module as a transform");
 
     // console.log(buffer.toString());
+    // const vm = require('vm');
 
     global.XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+    const btoa = require("btoa");
+    global.btoa = btoa
     global.self = global;
+    const window = global;
 
     eval(buffer.toString("utf8"));
 

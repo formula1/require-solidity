@@ -1,8 +1,13 @@
-pragma solidity ^0.4.11;
+pragma solidity  0.5.12;
 
 import "./SubContract1.sol";
 import "./nested/SubContract2.sol";
 
+
 contract HelloWorld {
-  function HelloWorld(){}
+    uint private time;
+
+    constructor() public {
+        time = block.timestamp;
+    }
 }

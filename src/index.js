@@ -8,6 +8,16 @@ const cache = new Map();
 
 const isWarning = /Warning\: /;
 
+function findImport(oFile, solToRequire){
+  debug.log("Look for relative file: " + oFile + ", from " + solToRequire);
+  oFile = path.resolve(path.dirname(solToRequire), oFile);
+  if(!fs.existsSync(oFile)){
+    debug.error(`File ${oFile} not found`);
+    return { error: `File ${oFile} not found` };
+  }
+  return { contents: fs.readFileSync(oFile, "utf8") };
+}
+
 module.exports = function(filename, relativeTo){
   var solToRequire = resolve.sync(filename, {
     basedir: path.resolve(relativeTo, ".."),
@@ -25,22 +35,29 @@ module.exports = function(filename, relativeTo){
   }
   const source = fs.readFileSync(solToRequire, "utf8");
   debug.log("before compile: " + solToRequire);
-  let compiledContract = solc.compile(
-    {
-      sources: {
-        [path.basename(solToRequire)]: source
+  let compiledContractString = solc.compile(
+    JSON.stringify(
+      {
+        language: "Solidity",
+        sources: {
+          [path.basename(solToRequire)]: {
+            content: source
+          }
+        },
+        settings: {
+          outputSelection: {
+            "*": { "*": ["*"] }
+          }
+        }
       }
-    }, 1,
-    function(oFile){
-      debug.log("Look for relative file: " + oFile + ", from " + solToRequire);
-      oFile = path.resolve(path.dirname(solToRequire), oFile);
-      if(!fs.existsSync(oFile)){
-        debug.error(`File ${oFile} not found`);
-        return { error: `File ${oFile} not found` };
-      }
-      return { contents: fs.readFileSync(oFile, "utf8") };
+    ),
+    function(otherFile){
+      return findImport(otherFile, solToRequire);
     }
   );
+
+  const compiledContract = JSON.parse(compiledContractString);
+
   compiledContract.errors && compiledContract.errors.forEach((e)=>{
     if(!isWarning.test(e)){
       throw e;
@@ -48,11 +65,7 @@ module.exports = function(filename, relativeTo){
       debug.warn(e);
     }
   });
-  Object.keys(compiledContract.contracts).forEach(function(key){
-    compiledContract.contracts[key].abi = JSON.parse(
-      compiledContract.contracts[key].interface
-    );
-  });
+
   cache.set(solToRequire, compiledContract);
   return compiledContract;
 };

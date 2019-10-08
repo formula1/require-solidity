@@ -1,7 +1,8 @@
-pragma solidity ^0.4.11;
+pragma solidity  0.5.12;
 
 import "./nested/SubContract2.sol";
 
+
 contract SubContract1 {
-  function SubContract1(){}
+    constructor() public {}
 }

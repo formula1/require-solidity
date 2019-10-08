@@ -1,5 +1,6 @@
-pragma solidity ^0.4.11;
+pragma solidity  0.5.12;
+
 
 contract SubContract3 {
-  function SubContract3(){}
+    constructor() public {}
 }
