@@ -6,7 +6,18 @@ const debug = require("./debug");
 
 const cache = new Map();
 
-const isWarning = /Warning\: /;
+const isWarning = function(e){
+  if(!e){
+    return true;
+  }
+  if(typepof e === "string"){
+    return /Warning\: /.test(e);
+  }
+  if(typeof e === "object"){
+    return e.severity === "warning"
+  }
+
+};
 
 function findImport(oFile, solToRequire){
   debug.log("Look for relative file: " + oFile + ", from " + solToRequire);
@@ -59,7 +70,7 @@ module.exports = function(filename, relativeTo){
   const compiledContract = JSON.parse(compiledContractString);
 
   compiledContract.errors && compiledContract.errors.forEach((e)=>{
-    if(!isWarning.test(e)){
+    if(!isWarning(e)){
       throw e;
     } else{
       debug.warn(e);
